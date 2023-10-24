@@ -1,5 +1,7 @@
+CXXSTD = c++17
+
 CXX = nvc++
-CXXFLAGS = -O3 -fast -gopt -std=c++17 -cuda -gpu=cc60 -gpu=rdc
+CXXFLAGS = -std=$(CXXSTD) -cuda -gpu=cc60 -gpu=rdc
 LINKFLAGS = $(CXXFLAGS) -cudalib=curand
 
 a.out: main.o amrex_random.o
@@ -8,7 +10,7 @@ a.out: main.o amrex_random.o
 amrex_random.o: amrex_random.cpp amrex_random.H
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-main.cpp: main.cpp amrex_random.H
+main.o: main.cpp amrex_random.H
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
